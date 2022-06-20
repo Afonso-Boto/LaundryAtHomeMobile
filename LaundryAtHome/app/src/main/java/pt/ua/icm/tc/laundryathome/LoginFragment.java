@@ -2,11 +2,27 @@ package pt.ua.icm.tc.laundryathome;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.web.client.RestTemplate;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.android.material.textfield.TextInputEditText;
+
+import pt.ua.icm.tc.laundryathome.model.LoginRequest;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -46,9 +62,13 @@ public class LoginFragment extends Fragment {
         return fragment;
     }
 
+    TextInputEditText inputUsername, inputPassword;
+    Button btnLogin;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        System.err.println("dsafkasdfdskfljadsklfjkladsjfladskfjadskfkljjadksjkfl");
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -58,7 +78,48 @@ public class LoginFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_login, container, false);
+        View view = inflater.inflate(R.layout.fragment_login, container, false);
+        System.err.println("dsafkasdfdskfljadsklfjkladsjfladskfjadskfkljjadksjkfl");
+
+        return view;
+    }
+
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        inputUsername = view.findViewById(R.id.inputUsername);
+        inputPassword = view.findViewById(R.id.inputPassword);
+        btnLogin = view.findViewById(R.id.btnLogin);
+
+        System.err.println("oncreate()");
+        System.err.println(btnLogin.getText().toString());
+
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.err.println("heyyyyyyyyyyy");
+                String uri = "http://52.233.236.63:81/auth/login";
+                RestTemplate restTemplate = new RestTemplate();
+                HttpHeaders httpHeaders = new HttpHeaders();
+                httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+                ObjectMapper objectMapper = new ObjectMapper();
+                String json = "";
+                HttpEntity<String> request1;
+
+                try {
+                    json =
+                            objectMapper.writeValueAsString(
+                                    new LoginRequest(inputUsername.getText().toString(), inputPassword.getText().toString()));
+                } catch (JsonProcessingException e) {
+                    e.printStackTrace();
+                }
+                request1 = new HttpEntity<>(json, httpHeaders);
+                String response = restTemplate.postForObject(uri, request1, String.class);
+
+                System.err.println(response);
+            }
+        });
     }
 }
