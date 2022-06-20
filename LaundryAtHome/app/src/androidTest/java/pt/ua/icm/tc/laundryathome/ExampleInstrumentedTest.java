@@ -1,4 +1,4 @@
-package lei.ua.laundryathome;
+package pt.ua.icm.tc.laundryathome;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("lei.ua.laundryathome", appContext.getPackageName());
+        assertEquals("pt.ua.icm.tc.laundryathome", appContext.getPackageName());
     }
 }

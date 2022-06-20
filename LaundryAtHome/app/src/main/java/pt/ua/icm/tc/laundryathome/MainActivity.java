@@ -1,4 +1,4 @@
-package lei.ua.laundryathome;
+package pt.ua.icm.tc.laundryathome;
 
 import androidx.appcompat.app.AppCompatActivity;
 
