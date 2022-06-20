@@ -1,5 +1,6 @@
 package pt.ua.icm.tc.laundryathome;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,6 +17,8 @@ import android.widget.Toast;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -68,7 +71,6 @@ public class LoginFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        System.err.println("dsafkasdfdskfljadsklfjkladsjfladskfjadskfkljjadksjkfl");
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -79,7 +81,6 @@ public class LoginFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
-        System.err.println("dsafkasdfdskfljadsklfjkladsjfladskfjadskfkljjadksjkfl");
 
         return view;
     }
@@ -100,26 +101,30 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 System.err.println("heyyyyyyyyyyy");
-                String uri = "http://52.233.236.63:81/auth/login";
-                RestTemplate restTemplate = new RestTemplate();
-                HttpHeaders httpHeaders = new HttpHeaders();
-                httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-                ObjectMapper objectMapper = new ObjectMapper();
-                String json = "";
-                HttpEntity<String> request1;
 
-                try {
-                    json =
-                            objectMapper.writeValueAsString(
-                                    new LoginRequest(inputUsername.getText().toString(), inputPassword.getText().toString()));
-                } catch (JsonProcessingException e) {
-                    e.printStackTrace();
-                }
-                request1 = new HttpEntity<>(json, httpHeaders);
-                String response = restTemplate.postForObject(uri, request1, String.class);
+                Thread thread = new Thread(() -> {
+                    try {
+                        String uri = "http://52.233.236.63:81/auth/login";
 
-                System.err.println(response);
+                        RestTemplate restTemplate = new RestTemplate();
+                        restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+                        restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+
+                        System.err.println("inputUsername: " + inputUsername.getText().toString());
+                        System.err.println("inputPassword: " + inputPassword.getText().toString());
+
+                        String response = restTemplate.postForObject(uri, new LoginRequest(inputUsername.getText().toString(), inputPassword.getText().toString()), String.class);
+
+                        System.err.println(response);
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+
+                thread.start();
             }
         });
     }
 }
+
