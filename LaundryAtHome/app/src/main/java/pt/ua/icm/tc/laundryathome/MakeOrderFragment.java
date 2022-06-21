@@ -21,6 +21,7 @@ public class MakeOrderFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    View view;
 
     ArrayAdapter<CharSequence> adapter;
     // TODO: Rename and change types of parameters
@@ -57,18 +58,31 @@ public class MakeOrderFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        spinner = getView().findViewById(R.id.spinner);
-        adapter = ArrayAdapter.createFromResource(getContext(), R.array.services_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
 
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        view = inflater.inflate(R.layout.fragment_make_order, container, false);
 
-        return inflater.inflate(R.layout.fragment_make_order, container, false);
+        // Inflate the layout for this fragment
+        spinner = (Spinner) view.findViewById(R.id.spinner);
+        System.err.println("spinner created");
+        if(spinner == null) {
+            System.err.println("spinner is null");
+        }
+        else {
+            adapter = ArrayAdapter.createFromResource(getContext(), R.array.services_array, android.R.layout.simple_spinner_item);
+
+
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+            spinner.setAdapter(adapter);
+        }
+
+
+
+
+        return view;
     }
 }

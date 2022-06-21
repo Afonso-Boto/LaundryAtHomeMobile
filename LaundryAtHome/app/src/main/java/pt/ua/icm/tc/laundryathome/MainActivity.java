@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
         actionBar.hide();
 
 
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_tag, MakeOrderFragment.newInstance("", "")).commit();
         setContentView(R.layout.activity_main);
     }
 }
