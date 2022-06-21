@@ -5,4 +5,9 @@
         <item>Roupa Interior</item>
         <item>Camisa</item>
     </string-array>
+    <string-array name="item_color">
+        <item>Claras</item>
+        <item>Escuras</item>
+    </string-array>
+
 </resources>

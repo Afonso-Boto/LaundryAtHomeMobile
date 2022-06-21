@@ -3,26 +3,45 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MakeOrderFragment">
+    tools:context=".MakeOrderFragment"
+    android:background="@drawable/background_laundryathome">
 
     <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="90dp"
-        android:layout_height="30dp"
+        android:id="@+id/spinner_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="171dp"
-        android:layout_marginEnd="160dp" />
+        android:layout_marginTop="218dp"
+        android:layout_marginEnd="153dp" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="60dp"
         android:layout_height="30dp"
-        android:layout_alignTop="@+id/spinner"
+        android:layout_alignTop="@+id/spinner_type"
         android:layout_marginTop="0dp"
-        android:layout_marginEnd="48dp"
-        android:layout_toStartOf="@+id/spinner"
+        android:layout_marginEnd="20dp"
+        android:layout_toStartOf="@+id/spinner_type"
         android:text="type"
         android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/textView"
+        android:layout_alignStart="@+id/textView"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="44dp"
+        android:text="Color" />
+
+    <Spinner
+        android:id="@+id/spinner_color"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/spinner_type"
+        android:layout_alignEnd="@+id/spinner_type"
+        android:layout_marginTop="44dp"
+        android:layout_marginEnd="1dp" />
 </RelativeLayout>

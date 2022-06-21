@@ -23,11 +23,13 @@ public class MakeOrderFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     View view;
 
-    ArrayAdapter<CharSequence> adapter;
+    ArrayAdapter<CharSequence> adapterType;
+    ArrayAdapter<CharSequence> adapterColor;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private Spinner spinner;
+    private Spinner spinnerType;
+    private Spinner spinnerColor;
 
     public MakeOrderFragment() {
         // Required empty public constructor
@@ -67,21 +69,18 @@ public class MakeOrderFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_make_order, container, false);
 
         // Inflate the layout for this fragment
-        spinner = (Spinner) view.findViewById(R.id.spinner);
-        System.err.println("spinner created");
-        if(spinner == null) {
-            System.err.println("spinner is null");
-        }
-        else {
-            adapter = ArrayAdapter.createFromResource(getContext(), R.array.services_array, android.R.layout.simple_spinner_item);
+        spinnerType = view.findViewById(R.id.spinner_type);
+        spinnerColor = view.findViewById(R.id.spinner_color);
+
+        adapterType = ArrayAdapter.createFromResource(getContext(), R.array.services_array, android.R.layout.simple_spinner_item);
+        adapterColor = ArrayAdapter.createFromResource(getContext(), R.array.item_color, android.R.layout.simple_spinner_item);
 
 
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
-            spinner.setAdapter(adapter);
-        }
+        adapterType.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        adapterColor.setDropDownViewResource(android.R.layout.simple_spinner_item);
 
-
-
+        spinnerType.setAdapter(adapterType);
+        spinnerColor.setAdapter(adapterColor);
 
         return view;
     }
