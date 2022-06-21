@@ -13,11 +13,11 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="218dp"
-        android:layout_marginEnd="153dp" />
+        android:layout_marginEnd="80dp" />
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="60dp"
+        android:layout_width="75dp"
         android:layout_height="30dp"
         android:layout_alignTop="@+id/spinner_type"
         android:layout_marginTop="0dp"
@@ -28,20 +28,63 @@
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="60dp"
+        android:layout_width="75dp"
         android:layout_height="30dp"
         android:layout_below="@+id/textView"
         android:layout_alignStart="@+id/textView"
         android:layout_marginStart="0dp"
         android:layout_marginTop="44dp"
-        android:text="Color" />
+        android:text="Color"
+        android:textSize="20sp" />
 
     <Spinner
         android:id="@+id/spinner_color"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/spinner_type"
-        android:layout_alignEnd="@+id/spinner_type"
+        android:layout_alignStart="@+id/spinner_type"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="44dp" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="75dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/textView2"
+        android:layout_alignStart="@+id/textView2"
+        android:layout_marginStart="0dp"
         android:layout_marginTop="44dp"
-        android:layout_marginEnd="1dp" />
+        android:text="Number"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/editTextNumber"
+        android:layout_width="75dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/spinner_color"
+        android:layout_alignTop="@+id/textView3"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:ems="10"
+        android:inputType="number" />
+
+    <Button
+        android:id="@+id/add_btn"
+        android:layout_width="75dp"
+        android:layout_height="40dp"
+        android:layout_below="@+id/textView3"
+        android:layout_alignStart="@+id/textView3"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="44dp"
+        android:text="add" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignTop="@+id/add_btn"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="0dp"
+        android:layout_toEndOf="@+id/add_btn"
+        android:text="Make order" />
 </RelativeLayout>

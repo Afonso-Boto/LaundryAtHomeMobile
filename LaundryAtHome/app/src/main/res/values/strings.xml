@@ -1,13 +1,13 @@
 <resources>
     <string name="app_name">LaundryAtHome</string>
     <string-array name="services_array">
-        <item>Casaco</item>
         <item>Roupa Interior</item>
+        <item>Casaco</item>
         <item>Camisa</item>
     </string-array>
     <string-array name="item_color">
-        <item>Claras</item>
         <item>Escuras</item>
+        <item>Claras</item>
     </string-array>
 
 </resources>
