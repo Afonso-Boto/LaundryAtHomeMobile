@@ -12,13 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
@@ -121,7 +119,8 @@ public class RegisterFragment extends Fragment {
 
                     String response = restTemplate.postForObject(uri, new RegisterRequest(username, email, password, fullName, Integer.parseInt(phone)), String.class);
 
-                    System.err.println(response);
+
+                    System.err.println("Registration successful");
 
                 } catch (Exception e) {
                     e.printStackTrace();

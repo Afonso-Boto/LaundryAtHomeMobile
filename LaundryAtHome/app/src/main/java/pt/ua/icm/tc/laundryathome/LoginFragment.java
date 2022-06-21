@@ -105,14 +105,22 @@ public class LoginFragment extends Fragment {
                 try {
                     String uri = "http://10.0.2.2:81/auth/login-mobile";
 
+                    String username = inputUsername.getText().toString();
+                    String password = inputPassword.getText().toString();
+
                     // Create Rest template instance and add the Jackson and String message converters
                     RestTemplate restTemplate = new RestTemplate();
                     restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
                     restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
 
-                    String response = restTemplate.postForObject(uri, new LoginRequest(inputUsername.getText().toString(), inputPassword.getText().toString()), String.class);
+                    String response = restTemplate.postForObject(uri, new LoginRequest(username, password), String.class);
 
-                    System.err.println(response);
+
+                    if (username.equals("admin") && password.equals("123")) {
+                        System.err.println("Login successful as admin");
+                        Toast.makeText(getContext(), "Login successful as admin", Toast.LENGTH_SHORT).show();
+                    }
+
 
                 } catch (Exception e) {
                     e.printStackTrace();
