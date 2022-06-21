@@ -1,5 +1,7 @@
 package pt.ua.icm.tc.laundryathome;
 
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -8,7 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.TableLayout;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +29,8 @@ public class MakeOrderFragment extends Fragment {
 
     ArrayAdapter<CharSequence> adapterType;
     ArrayAdapter<CharSequence> adapterColor;
+
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -72,9 +78,9 @@ public class MakeOrderFragment extends Fragment {
         spinnerType = view.findViewById(R.id.spinner_type);
         spinnerColor = view.findViewById(R.id.spinner_color);
 
+
         adapterType = ArrayAdapter.createFromResource(getContext(), R.array.services_array, android.R.layout.simple_spinner_item);
         adapterColor = ArrayAdapter.createFromResource(getContext(), R.array.item_color, android.R.layout.simple_spinner_item);
-
 
         adapterType.setDropDownViewResource(android.R.layout.simple_spinner_item);
         adapterColor.setDropDownViewResource(android.R.layout.simple_spinner_item);
@@ -84,4 +90,5 @@ public class MakeOrderFragment extends Fragment {
 
         return view;
     }
+
 }
