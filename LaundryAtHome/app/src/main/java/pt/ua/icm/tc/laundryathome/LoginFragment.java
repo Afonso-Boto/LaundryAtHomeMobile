@@ -28,6 +28,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.util.Objects;
+
 import pt.ua.icm.tc.laundryathome.model.LoginRequest;
 
 /**
@@ -116,11 +118,14 @@ public class LoginFragment extends Fragment {
                     String response = restTemplate.postForObject(uri, new LoginRequest(username, password), String.class);
 
 
-                    if (username.equals("admin") && password.equals("123")) {
-                        System.err.println("Login successful as admin");
-                        Toast.makeText(getContext(), "Login successful as admin", Toast.LENGTH_SHORT).show();
+                    if(Objects.equals(response, "true")) {
+                        if (username.equals("admin")) {
+                            System.err.println("Login successful as admin");
+                            Toast.makeText(getContext(), "Login successful as admin", Toast.LENGTH_SHORT).show();
+                        } else {
+                            getFragmentManager().beginTransaction().replace(R.id.fragment_tag, new ServicesFragment()).commit();
+                        }
                     }
-
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -134,7 +139,7 @@ public class LoginFragment extends Fragment {
         Button btnSwitchRegister = view.findViewById(R.id.btnSwitchRegister);
         btnSwitchRegister.setOnClickListener(v -> {
             FragmentManager fm = getFragmentManager();
-            fm.beginTransaction().replace(R.id.fragmentLayout, new RegisterFragment()).commit();
+            fm.beginTransaction().replace(R.id.fragment_tag, new RegisterFragment()).commit();
         });
     }
 }
