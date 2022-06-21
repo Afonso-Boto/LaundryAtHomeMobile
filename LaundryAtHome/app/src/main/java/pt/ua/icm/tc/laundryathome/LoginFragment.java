@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -96,34 +97,36 @@ public class LoginFragment extends Fragment {
         inputPassword = view.findViewById(R.id.inputPassword);
         btnLogin = view.findViewById(R.id.btnLogin);
 
-        System.err.println("oncreate()");
-        System.err.println(btnLogin.getText().toString());
+        // Login Button
+        btnLogin.setOnClickListener(view1 -> {
+            System.err.println("heyyyyyyyyyyy");
 
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                System.err.println("heyyyyyyyyyyy");
+            Thread thread = new Thread(() -> {
+                try {
+                    String uri = "http://10.0.2.2:81/auth/login-mobile";
 
-                Thread thread = new Thread(() -> {
-                    try {
-                        String uri = "http://10.0.2.2:81/auth/login-mobile";
+                    // Create Rest template instance and add the Jackson and String message converters
+                    RestTemplate restTemplate = new RestTemplate();
+                    restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+                    restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
 
-                        // Create Rest template instance and add the Jackson and String message converters
-                        RestTemplate restTemplate = new RestTemplate();
-                        restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-                        restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                    String response = restTemplate.postForObject(uri, new LoginRequest(inputUsername.getText().toString(), inputPassword.getText().toString()), String.class);
 
-                        String response = restTemplate.postForObject(uri, new LoginRequest(inputUsername.getText().toString(), inputPassword.getText().toString()), String.class);
+                    System.err.println(response);
 
-                        System.err.println(response);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
 
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                });
+            thread.start();
+        });
 
-                thread.start();
-            }
+        // Buttton switch Login -> Register
+        Button btnSwitchRegister = view.findViewById(R.id.btnSwitchRegister);
+        btnSwitchRegister.setOnClickListener(v -> {
+            FragmentManager fm = getFragmentManager();
+            fm.beginTransaction().replace(R.id.fragmentLayout, new RegisterFragment()).commit();
         });
     }
 }

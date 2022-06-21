@@ -4,6 +4,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -15,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
         assert actionBar != null;
         actionBar.hide();
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentLayout, new RegisterFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentLayout, new LoginFragment()).commit();
 
         setContentView(R.layout.activity_main);
     }
