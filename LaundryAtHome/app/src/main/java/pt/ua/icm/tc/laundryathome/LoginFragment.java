@@ -28,6 +28,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.util.Objects;
+
 import pt.ua.icm.tc.laundryathome.model.LoginRequest;
 
 /**
@@ -116,9 +118,11 @@ public class LoginFragment extends Fragment {
                     String response = restTemplate.postForObject(uri, new LoginRequest(username, password), String.class);
 
 
-                    if (username.equals("admin") && password.equals("123")) {
+                    if (Objects.equals(response, "true") && username.equals("admin")) {
                         System.err.println("Login successful as admin");
-                        Toast.makeText(getContext(), "Login successful as admin", Toast.LENGTH_SHORT).show();
+
+                        FragmentManager fm = getFragmentManager();
+                        fm.beginTransaction().replace(R.id.fragmentLayout, new OrdersFragments()).commit();
                     }
 
 
