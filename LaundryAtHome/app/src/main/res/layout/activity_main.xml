@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <include layout="@layout/fragment_services" />
+    <include layout="@layout/fragment_make_order" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
