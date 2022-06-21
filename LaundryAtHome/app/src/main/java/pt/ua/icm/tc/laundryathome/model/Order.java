@@ -9,6 +9,13 @@ public class Order {
     private boolean isCompleted;
     private double totalPrice;
 
+    public Order() {
+        this.id = 0;
+        this.date = "";
+        this.isCompleted = false;
+        this.totalPrice = 0;
+    }
+
     public Order(int id, String date, boolean isCompleted, double totalPrice) {
         this.id = id;
         this.date = date;

@@ -130,7 +130,8 @@ public class OrdersFragments extends Fragment {
         itemAdapter.setOnItemClickListener(new ItemAdapter.ClickListener() {
             @Override
             public void onItemClick(int position, View v) {
-                Toast.makeText(getContext(), "Clicked " + position, Toast.LENGTH_SHORT).show();
+                TrackingFragment trackingFragment = TrackingFragment.newInstance(orders.get(position).getId());
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragmentLayout, trackingFragment).commit();
             }
         });
 
