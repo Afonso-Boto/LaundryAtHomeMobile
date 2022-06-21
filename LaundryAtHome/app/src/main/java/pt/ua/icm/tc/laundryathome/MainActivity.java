@@ -16,8 +16,8 @@ public class MainActivity extends AppCompatActivity {
         assert actionBar != null;
         actionBar.hide();
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentLayout, new LoginFragment()).commit();
 
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_tag, MakeOrderFragment.newInstance("", "")).commit();
         setContentView(R.layout.activity_main);
     }
 }

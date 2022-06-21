@@ -1,5 +1,13 @@
 <resources>
     <string name="app_name">LaundryAtHome</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string-array name="services_array">
+        <item>Roupa Interior</item>
+        <item>Casaco</item>
+        <item>Camisa</item>
+    </string-array>
+    <string-array name="item_color">
+        <item>Escuras</item>
+        <item>Claras</item>
+    </string-array>
+
 </resources>
