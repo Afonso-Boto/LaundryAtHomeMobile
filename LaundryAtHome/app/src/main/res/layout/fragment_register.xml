@@ -37,11 +37,11 @@
         android:layout_width="115dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/inputPassword2"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="149dp"
-        android:layout_marginTop="47dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="45dp"
+        android:layout_marginEnd="64dp"
         android:backgroundTint="@android:color/holo_blue_dark"
-        android:text="Register" />
+        android:text="Sign up" />
 
     <EditText
         android:id="@+id/inputEmail"
@@ -71,6 +71,17 @@
         android:layout_marginTop="21dp"
         android:ems="10"
         android:hint="Full Name" />
+
+    <Button
+        android:id="@+id/btnSwitchLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/inputPassword2"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="75dp"
+        android:layout_marginTop="44dp"
+        android:backgroundTint="@android:color/holo_blue_dark"
+        android:text="Login" />
 
 
 </RelativeLayout>

@@ -5,19 +5,18 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
@@ -93,43 +92,49 @@ public class RegisterFragment extends Fragment {
         inputPhone = view.findViewById(R.id.inputPhone);
         btnRegister = view.findViewById(R.id.btnRegister);
 
-        btnRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                System.err.println("heyyyyyyyyyyy");
+        // Register Button
+        btnRegister.setOnClickListener(v -> {
+            System.err.println("heyyyyyyyyyyy");
 
-                Thread thread = new Thread(() -> {
-                    try {
-                        String username = inputUsername2.getText().toString();
-                        String password = inputPassword2.getText().toString();
-                        String email = inputEmail.getText().toString();
-                        String fullName = inputFullName.getText().toString();
-                        String phone = inputPhone.getText().toString();
+            Thread thread = new Thread(() -> {
+                try {
+                    String username = inputUsername2.getText().toString();
+                    String password = inputPassword2.getText().toString();
+                    String email = inputEmail.getText().toString();
+                    String fullName = inputFullName.getText().toString();
+                    String phone = inputPhone.getText().toString();
 
-                        String uri = "http://10.0.2.2:81/auth/register-mobile";
+                    String uri = "http://10.0.2.2:81/auth/register-mobile";
 
-                        // Create Rest template instance and add the Jackson and String message converters
-                        RestTemplate restTemplate = new RestTemplate();
-                        restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-                        restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                    // Create Rest template instance and add the Jackson and String message converters
+                    RestTemplate restTemplate = new RestTemplate();
+                    restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+                    restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
 
-                        System.err.println("inputUsername: " + inputUsername2.getText().toString());
-                        System.err.println("inputPassword: " + inputPassword2.getText().toString());
-                        System.err.println("inputEmail: " + inputEmail.getText().toString());
-                        System.err.println("inputFullName: " + inputFullName.getText().toString());
-                        System.err.println("inputPhone: " + inputPhone.getText().toString());
+                    System.err.println("inputUsername: " + inputUsername2.getText().toString());
+                    System.err.println("inputPassword: " + inputPassword2.getText().toString());
+                    System.err.println("inputEmail: " + inputEmail.getText().toString());
+                    System.err.println("inputFullName: " + inputFullName.getText().toString());
+                    System.err.println("inputPhone: " + inputPhone.getText().toString());
 
-                        String response = restTemplate.postForObject(uri, new RegisterRequest(username, email, password, fullName, Integer.parseInt(phone)), String.class);
+                    String response = restTemplate.postForObject(uri, new RegisterRequest(username, email, password, fullName, Integer.parseInt(phone)), String.class);
 
-                        System.err.println(response);
 
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                });
+                    System.err.println("Registration successful");
 
-                thread.start();
-            }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+
+            thread.start();
+        });
+
+        // Buttton switch Register -> Login
+        Button btnSwitchLogin = view.findViewById(R.id.btnSwitchLogin);
+        btnSwitchLogin.setOnClickListener(v -> {
+            FragmentManager fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.fragmentLayout, new LoginFragment()).commit();
         });
 
     }
