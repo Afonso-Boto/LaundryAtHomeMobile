@@ -16,7 +16,9 @@ import android.widget.Toast;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
@@ -104,14 +106,12 @@ public class LoginFragment extends Fragment {
 
                 Thread thread = new Thread(() -> {
                     try {
-                        String uri = "http://52.233.236.63:81/auth/login";
+                        String uri = "http://10.0.2.2:81/auth/login-mobile";
 
+                        // Create Rest template instance and add the Jackson and String message converters
                         RestTemplate restTemplate = new RestTemplate();
                         restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
                         restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
-
-                        System.err.println("inputUsername: " + inputUsername.getText().toString());
-                        System.err.println("inputPassword: " + inputPassword.getText().toString());
 
                         String response = restTemplate.postForObject(uri, new LoginRequest(inputUsername.getText().toString(), inputPassword.getText().toString()), String.class);
 
