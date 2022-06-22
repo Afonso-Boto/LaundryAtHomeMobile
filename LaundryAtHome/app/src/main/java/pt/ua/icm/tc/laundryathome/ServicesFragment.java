@@ -102,7 +102,8 @@ public class ServicesFragment extends Fragment implements View.OnClickListener {
                 String response = restTemplate.getForObject(uri,String.class);
 
                 if(Objects.equals(response, "true")) {
-                    getFragmentManager().beginTransaction().replace(R.id.fragment_tag, new MakeOrderFragment()).commit();
+                    MakeOrderFragment makeOrderFragment = MakeOrderFragment.newInstance(user);
+                    getFragmentManager().beginTransaction().replace(R.id.fragment_tag, makeOrderFragment).commit();
                     return ;
                 }
 
