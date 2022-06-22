@@ -15,13 +15,19 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TableLayout;
+import android.widget.Toast;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
+import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
@@ -122,8 +128,13 @@ public class MakeOrderFragment extends Fragment implements View.OnClickListener 
     public boolean addItem(){
         String type = spinnerType.getSelectedItem().toString();
         String color = spinnerColor.getSelectedItem().toString();
+        if(this.addr.getText().toString().equals("") || this.numOfItems.getText().toString().equals("")){
+            Toast.makeText(getContext(), "Please fill all fields", Toast.LENGTH_SHORT).show();
+            return false;
+        }
         String addr = this.addr.getText().toString();
         String numOfItems = this.numOfItems.getText().toString();
+
 
         Item item = new Item(addr, type, color, numOfItems);
         System.err.println(item.toJson());
@@ -133,7 +144,7 @@ public class MakeOrderFragment extends Fragment implements View.OnClickListener 
     public void makeOrder(){
         Thread thread = new Thread(() -> {
             try {
-                String uri = "http://10.0.2.2:81/order/init-order-mobile/" + user;
+                String uri = "http://10.0.2.2:81/order/make-order-mobile/" + user;
                 List<JSONObject> jsonObjects = new ArrayList<>();
                 for (Item item : items) {
                     JSONObject jsonObject = new JSONObject();
@@ -141,23 +152,28 @@ public class MakeOrderFragment extends Fragment implements View.OnClickListener 
                     jsonObject.put("isDark", item.getIsDark());
                     jsonObject.put("number", item.getNumber());
                     jsonObject.put("address", item.getAddress());
+                    System.err.println(jsonObject);
+
                     jsonObjects.add(jsonObject);
                 }
-                JSONObject json2 = new JSONObject();
-                json2.put("its", jsonObjects);
+                if(items.isEmpty()){
+                    Toast.makeText(getContext(), "No items to order! Try to add items", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                JSONArray jsonArray = new JSONArray(jsonObjects);
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("its", jsonArray);
+                String send = jsonObject.toString().replaceAll("\"", "\'");
+                System.err.println(send);
 
 
                 // Create Rest template instance and add the Jackson and String message converters
                 RestTemplate restTemplate = new RestTemplate();
                 restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
                 restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
-                ObjectMapper mapper = new ObjectMapper();
-                mapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-                String val = mapper.writeValueAsString(json2);
-                System.err.println(val);
 
-
-                String response = restTemplate.postForObject(uri, val, String.class);
+                String response = restTemplate.postForObject(uri, send,String.class);
 
                 if(Objects.equals(response, "true")) {
                     ServicesFragment servicesFragment = ServicesFragment.newInstance(user);
