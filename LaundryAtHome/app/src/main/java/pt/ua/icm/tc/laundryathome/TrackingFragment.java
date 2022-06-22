@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -41,6 +42,7 @@ public class TrackingFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "ORDER";
+    private static final String ARG_PARAM2 = "param2";
 
 
     // TODO: Rename and change types of parameters
@@ -59,10 +61,11 @@ public class TrackingFragment extends Fragment {
      * @return A new instance of fragment TrackingFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static TrackingFragment newInstance(int param1) {
+    public static TrackingFragment newInstance(int param1, String param2) {
         TrackingFragment fragment = new TrackingFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -72,6 +75,7 @@ public class TrackingFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getInt(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
@@ -86,6 +90,7 @@ public class TrackingFragment extends Fragment {
 
         System.err.println("TrackingFragment.onCreateView");
         System.err.println("mParam1: " + mParam1);
+        System.err.println("mParam2: " + mParam2);
 
         Order order = new Order();
 
@@ -168,6 +173,12 @@ public class TrackingFragment extends Fragment {
                 }
 
             }
+        });
+
+        Button btnComplaint = view.findViewById(R.id.btnComplaint);
+        btnComplaint.setOnClickListener(v -> {
+            ComplaintFragment complaintFragment = ComplaintFragment.newInstance(order.getId(), mParam2);
+            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_tag, complaintFragment).commit();
         });
 
 
