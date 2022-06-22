@@ -97,7 +97,7 @@ public class TrackingFragment extends Fragment {
         // Thread
         Thread thread = new Thread(() -> {
             try {
-                String uri = "http://10.0.2.2:81/tracking-mobile?orderId=" + mParam1;
+                String uri = "http://52.233.236.63:81/tracking-mobile?orderId=" + mParam1;
 
 
                 // Create Rest template instance and add the Jackson and String message converters
@@ -176,12 +176,14 @@ public class TrackingFragment extends Fragment {
         });
 
         Button btnComplaint = view.findViewById(R.id.btnComplaint);
-        btnComplaint.setOnClickListener(v -> {
-            ComplaintFragment complaintFragment = ComplaintFragment.newInstance(order.getId(), mParam2);
-            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_tag, complaintFragment).commit();
-        });
-
-
+        if (mParam2.equals("admin"))
+            btnComplaint.setVisibility(View.GONE);
+        else{
+            btnComplaint.setOnClickListener(v -> {
+                ComplaintFragment complaintFragment = ComplaintFragment.newInstance(order.getId(), mParam2);
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_tag2, complaintFragment).commit();
+            });
+        }
 
         return view;
     }

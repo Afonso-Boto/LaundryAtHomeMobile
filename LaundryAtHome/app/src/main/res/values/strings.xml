@@ -4,6 +4,8 @@
         <item>Roupa Interior</item>
         <item>Casaco</item>
         <item>Camisa</item>
+        <item>Calças</item>
+        <item>T-Shirt</item>
     </string-array>
     <string-array name="item_color">
         <item>Escuras</item>

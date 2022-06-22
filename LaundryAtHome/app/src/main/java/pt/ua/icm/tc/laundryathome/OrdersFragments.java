@@ -90,7 +90,7 @@ public class OrdersFragments extends Fragment {
         // Thread
         thread = new Thread(() -> {
             try {
-                String uri = "http://10.0.2.2:81/orders-mobile?username=" + mParam1;
+                String uri = "http://52.233.236.63:81/orders-mobile?username=" + mParam1;
 
 
                 // Create Rest template instance and add the Jackson and String message converters
@@ -101,8 +101,8 @@ public class OrdersFragments extends Fragment {
                 String response = restTemplate.getForObject(uri, String.class);
                 String[] responseArray = response.split(",");
 
-                for (int i = 0; i < responseArray.length; i += 4) {
-                    orders.add(new Order(Integer.parseInt(responseArray[i]), responseArray[i + 1], Boolean.parseBoolean(responseArray[i + 2]), Double.parseDouble(responseArray[i + 3])));
+                for (int i = 0; i < responseArray.length; i += 5) {
+                    orders.add(new Order(Integer.parseInt(responseArray[i]), responseArray[i + 1], Boolean.parseBoolean(responseArray[i + 2]), Double.parseDouble(responseArray[i + 3]), responseArray[i + 4]));
                 }
 
                 System.err.println("OrdersFragments.getData: " + orders.size());
@@ -128,7 +128,7 @@ public class OrdersFragments extends Fragment {
             @Override
             public void onItemClick(int position, View v) {
                 TrackingFragment trackingFragment = TrackingFragment.newInstance(orders.get(position).getId(), mParam1);
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_tag, trackingFragment).commit();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_tag2, trackingFragment).commit();
             }
         });
 

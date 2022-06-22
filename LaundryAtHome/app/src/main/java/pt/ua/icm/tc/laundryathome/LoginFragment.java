@@ -1,5 +1,6 @@
 package pt.ua.icm.tc.laundryathome;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -106,7 +107,7 @@ public class LoginFragment extends Fragment {
 
             Thread thread = new Thread(() -> {
                 try {
-                    String uri = "http://10.0.2.2:81/auth/login-mobile";
+                    String uri = "http://52.233.236.63:81/auth/login-mobile";
 
                     String username = inputUsername.getText().toString();
                     String password = inputPassword.getText().toString();
@@ -119,14 +120,9 @@ public class LoginFragment extends Fragment {
                     String response = restTemplate.postForObject(uri, new LoginRequest(username, password), String.class);
 
                     if(Objects.equals(response, "true")) {
-                        if (username.equals("admin")) {
-                            System.err.println("Login successful as admin");
-                            OrdersFragments ordersFragments = OrdersFragments.newInstance(username);
-                            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_tag, ordersFragments).commit();
-                        } else {
-                            ServicesFragment servicesFragment = ServicesFragment.newInstance(username);
-                            getFragmentManager().beginTransaction().replace(R.id.fragment_tag, servicesFragment).commit();
-                        }
+                        Intent intent = new Intent(getActivity(), MainActivity2.class);
+                        intent.putExtra("username", username);
+                        startActivity(intent);
                     }
 
 

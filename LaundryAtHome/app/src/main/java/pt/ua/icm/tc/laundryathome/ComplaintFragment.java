@@ -77,7 +77,7 @@ public class ComplaintFragment extends Fragment {
             // Thread
             Thread thread = new Thread(() -> {
                 try {
-                    String uri = "http://10.0.2.2:81/order/complaint-mobile";
+                    String uri = "http://52.233.236.63:81/order/complaint-mobile";
 
 
                     // Create Rest template instance and add the Jackson and String message converters
@@ -98,7 +98,7 @@ public class ComplaintFragment extends Fragment {
 
                     if(Objects.equals(response, "true")) {
                         OrdersFragments ordersFragments = OrdersFragments.newInstance(mParam2);
-                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_tag, ordersFragments).commit();
+                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_tag2, ordersFragments).commit();
                     }
 
                 } catch (Exception e) {

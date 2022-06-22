@@ -1,5 +1,6 @@
 package pt.ua.icm.tc.laundryathome;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -20,6 +21,8 @@ import com.google.android.material.textfield.TextInputEditText;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.Objects;
 
 import pt.ua.icm.tc.laundryathome.model.RegisterRequest;
 
@@ -104,7 +107,7 @@ public class RegisterFragment extends Fragment {
                     String fullName = inputFullName.getText().toString();
                     String phone = inputPhone.getText().toString();
 
-                    String uri = "http://10.0.2.2:81/auth/register-mobile";
+                    String uri = "http://52.233.236.63:81/auth/register-mobile";
 
                     // Create Rest template instance and add the Jackson and String message converters
                     RestTemplate restTemplate = new RestTemplate();
@@ -119,6 +122,11 @@ public class RegisterFragment extends Fragment {
 
                     String response = restTemplate.postForObject(uri, new RegisterRequest(username, email, password, fullName, Integer.parseInt(phone)), String.class);
 
+                    if (Objects.equals(response, "success")) {
+                        Intent intent = new Intent(getActivity(), MainActivity2.class);
+                        intent.putExtra("username", username);
+                        startActivity(intent);
+                    }
 
                     System.err.println("Registration successful");
 

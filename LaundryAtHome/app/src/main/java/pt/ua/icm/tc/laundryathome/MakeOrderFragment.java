@@ -151,7 +151,7 @@ public class MakeOrderFragment extends Fragment implements View.OnClickListener 
     public void makeOrder(){
         Thread thread = new Thread(() -> {
             try {
-                String uri = "http://10.0.2.2:81/order/make-order-mobile/" + user;
+                String uri = "http://52.233.236.63:81/order/make-order-mobile/" + user;
                 List<JSONObject> jsonObjects = new ArrayList<>();
                 for (Item item : items) {
                     JSONObject jsonObject = new JSONObject();
@@ -183,8 +183,8 @@ public class MakeOrderFragment extends Fragment implements View.OnClickListener 
 
                 if(Objects.equals(response, "true")) {
 
-                    ServicesFragment servicesFragment = ServicesFragment.newInstance(user);
-                    getFragmentManager().beginTransaction().replace(R.id.fragment_tag, servicesFragment).commit();
+                    OrdersFragments ordersFragments = OrdersFragments.newInstance(user);
+                    getFragmentManager().beginTransaction().replace(R.id.fragment_tag2, ordersFragments).commit();
                     return ;
                 }
 

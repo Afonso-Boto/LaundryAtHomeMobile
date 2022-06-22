@@ -92,7 +92,7 @@ public class ServicesFragment extends Fragment implements View.OnClickListener {
 
         Thread thread = new Thread(() -> {
             try {
-                String uri = "http://10.0.2.2:81/order/init-order-mobile/" + String.valueOf(orderType) + "/" + user;
+                String uri = "http://52.233.236.63:81/order/init-order-mobile/" + String.valueOf(orderType) + "/" + user;
 
                 // Create Rest template instance and add the Jackson and String message converters
                 RestTemplate restTemplate = new RestTemplate();
@@ -103,7 +103,7 @@ public class ServicesFragment extends Fragment implements View.OnClickListener {
 
                 if(Objects.equals(response, "true")) {
                     MakeOrderFragment makeOrderFragment = MakeOrderFragment.newInstance(user);
-                    getFragmentManager().beginTransaction().replace(R.id.fragment_tag, makeOrderFragment).commit();
+                    getFragmentManager().beginTransaction().replace(R.id.fragment_tag2, makeOrderFragment).commit();
                     return ;
                 }
 
