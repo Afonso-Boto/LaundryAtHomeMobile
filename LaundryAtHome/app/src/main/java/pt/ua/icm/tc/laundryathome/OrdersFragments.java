@@ -41,7 +41,6 @@ public class OrdersFragments extends Fragment {
 
     // TODO: Rename and change types of parameters
     private String mParam1;
-    private String mParam2;
 
     public OrdersFragments() {
         // Required empty public constructor
@@ -52,15 +51,13 @@ public class OrdersFragments extends Fragment {
      * this fragment using the provided parameters.
      *
      * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment OrdersFragments.
      */
     // TODO: Rename and change types and number of parameters
-    public static OrdersFragments newInstance(String param1, String param2) {
+    public static OrdersFragments newInstance(String param1) {
         OrdersFragments fragment = new OrdersFragments();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -70,7 +67,6 @@ public class OrdersFragments extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
@@ -85,6 +81,7 @@ public class OrdersFragments extends Fragment {
         View view = inflater.inflate(R.layout.fragment_orders_fragments, container, false);
 
         System.err.println("OrdersFragments.onCreateView");
+        System.err.println("OrdersFragments.onCreateView.mParam1: " + mParam1);
 
         recyclerView = view.findViewById(R.id.recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -93,7 +90,7 @@ public class OrdersFragments extends Fragment {
         // Thread
         thread = new Thread(() -> {
             try {
-                String uri = "http://10.0.2.2:81/orders-mobile";
+                String uri = "http://10.0.2.2:81/orders-mobile?username=" + mParam1;
 
 
                 // Create Rest template instance and add the Jackson and String message converters
@@ -137,10 +134,5 @@ public class OrdersFragments extends Fragment {
 
 
         return view;
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    private synchronized void getData() {
-
     }
 }

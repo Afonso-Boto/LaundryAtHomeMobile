@@ -118,11 +118,11 @@ public class LoginFragment extends Fragment {
                     String response = restTemplate.postForObject(uri, new LoginRequest(username, password), String.class);
 
 
-                    if (Objects.equals(response, "true") && username.equals("admin")) {
+                    if (Objects.equals(response, "true")) {
                         System.err.println("Login successful as admin");
 
-                        FragmentManager fm = getFragmentManager();
-                        fm.beginTransaction().replace(R.id.fragmentLayout, new OrdersFragments()).commit();
+                        OrdersFragments ordersFragments = OrdersFragments.newInstance(username);
+                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragmentLayout, ordersFragments).commit();
                     }
 
 
