@@ -8,6 +8,7 @@ public class Order {
     private String date;
     private boolean isCompleted;
     private double totalPrice;
+    private String deliveryLocation;
 
     public Order() {
         this.id = 0;
@@ -16,11 +17,12 @@ public class Order {
         this.totalPrice = 0;
     }
 
-    public Order(int id, String date, boolean isCompleted, double totalPrice) {
+    public Order(int id, String date, boolean isCompleted, double totalPrice, String deliveryLocation) {
         this.id = id;
         this.date = date;
         this.isCompleted = isCompleted;
         this.totalPrice = totalPrice;
+        this.deliveryLocation = deliveryLocation;
     }
 
     public int getId() {
@@ -53,5 +55,13 @@ public class Order {
 
     public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
+    }
+
+    public String getDeliveryLocation() {
+        return deliveryLocation;
+    }
+
+    public void setDeliveryLocation(String deliveryLocation) {
+        this.deliveryLocation = deliveryLocation;
     }
 }

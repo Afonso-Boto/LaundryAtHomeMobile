@@ -1,6 +1,8 @@
 package pt.ua.icm.tc.laundryathome;
 
 import android.annotation.SuppressLint;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,8 +12,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.firestore.GeoPoint;
+
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
+
+import java.io.IOException;
+import java.util.List;
 
 import pt.ua.icm.tc.laundryathome.model.Order;
 
@@ -59,6 +75,9 @@ public class TrackingFragment extends Fragment {
         }
     }
 
+    MapView mMapView;
+    private GoogleMap googleMap;
+
     @SuppressLint("SetTextI18n")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -87,6 +106,7 @@ public class TrackingFragment extends Fragment {
                 order.setDate(responseArray[1]);
                 order.setCompleted(Boolean.parseBoolean(responseArray[2]));
                 order.setTotalPrice(Double.parseDouble(responseArray[3]));
+                order.setDeliveryLocation(responseArray[4]);
 
 
             } catch (Exception e) {
@@ -105,13 +125,101 @@ public class TrackingFragment extends Fragment {
         TextView orderDate = view.findViewById(R.id.date);
         TextView orderCompleted = view.findViewById(R.id.isCompleted);
         TextView orderTotalPrice = view.findViewById(R.id.totalPrice);
+        TextView orderDeliveryLocation = view.findViewById(R.id.deliveryLocation);
 
         orderId.setText("Order #" + String.valueOf(order.getId()));
         orderDate.setText("Date: " + order.getDate());
         orderCompleted.setText("Completed: " + String.valueOf(order.isCompleted()));
         orderTotalPrice.setText("Total Price: " + String.valueOf(order.getTotalPrice()));
+        orderDeliveryLocation.setText("Delivery Location: " + order.getDeliveryLocation());
+
+
+
+        mMapView = (MapView) view.findViewById(R.id.mapView);
+        mMapView.onCreate(savedInstanceState);
+
+        mMapView.onResume(); // needed to get the map to display immediately
+
+        try {
+            MapsInitializer.initialize(getActivity().getApplicationContext());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        mMapView.getMapAsync(new OnMapReadyCallback() {
+            @Override
+            public void onMapReady(GoogleMap mMap) {
+                googleMap = mMap;
+
+                if (orderDeliveryLocation.getText().toString() != null && !orderDeliveryLocation.getText().toString().equals("")) {
+                    LatLng latLng = getLocationFromAddress(orderDeliveryLocation.getText().toString());
+
+
+                    if (latLng != null) {
+                        googleMap.addMarker(new MarkerOptions().position(latLng).title("Delivery Location"));
+                        CameraPosition cameraPosition = new CameraPosition.Builder().target(latLng).zoom(12).build();
+                        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                    }else{
+                        latLng = new LatLng(40.631230465638644, -8.657472830474786);
+                        googleMap.addMarker(new MarkerOptions().position(latLng).title("Delivery Location"));
+                        CameraPosition cameraPosition = new CameraPosition.Builder().target(latLng).zoom(12).build();
+                        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                    }
+                }
+
+            }
+        });
+
 
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mMapView.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mMapView.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mMapView.onDestroy();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mMapView.onLowMemory();
+    }
+
+    public LatLng getLocationFromAddress(String strAddress) {
+
+        Geocoder coder = new Geocoder(getActivity().getApplicationContext());
+        List<Address> address;
+        LatLng p1 = null;
+
+        try {
+            // May throw an IOException
+            address = coder.getFromLocationName(strAddress, 5);
+            if (address == null) {
+                return null;
+            }
+
+            Address location = address.get(0);
+            p1 = new LatLng(location.getLatitude(), location.getLongitude() );
+
+        } catch (IOException ex) {
+
+            ex.printStackTrace();
+        }
+
+        return p1;
     }
 }
