@@ -141,7 +141,7 @@ public class LoginFragment extends Fragment {
         Button btnSwitchRegister = view.findViewById(R.id.btnSwitchRegister);
         btnSwitchRegister.setOnClickListener(v -> {
             FragmentManager fm = getFragmentManager();
-            fm.beginTransaction().replace(R.id.fragmentLayout, new RegisterFragment()).commit();
+            fm.beginTransaction().replace(R.id.fragment_tag, new RegisterFragment()).commit();
         });
     }
 }

@@ -16,9 +16,20 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+
+import org.json.JSONObject;
+import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.client.RestTemplate;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import pt.ua.icm.tc.laundryathome.model.Item;
 
@@ -114,11 +125,51 @@ public class MakeOrderFragment extends Fragment implements View.OnClickListener 
         String addr = this.addr.getText().toString();
         String numOfItems = this.numOfItems.getText().toString();
 
-        Item item = new Item(type, color, addr, numOfItems);
+        Item item = new Item(addr, type, color, numOfItems);
+        System.err.println(item.toJson());
         return  items.add(item);
     }
 
     public void makeOrder(){
+        Thread thread = new Thread(() -> {
+            try {
+                String uri = "http://10.0.2.2:81/order/init-order-mobile/" + user;
+                List<JSONObject> jsonObjects = new ArrayList<>();
+                for (Item item : items) {
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.put("itemType", item.getItemType());
+                    jsonObject.put("isDark", item.getIsDark());
+                    jsonObject.put("number", item.getNumber());
+                    jsonObject.put("address", item.getAddress());
+                    jsonObjects.add(jsonObject);
+                }
+                JSONObject json2 = new JSONObject();
+                json2.put("its", jsonObjects);
+
+
+                // Create Rest template instance and add the Jackson and String message converters
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                ObjectMapper mapper = new ObjectMapper();
+                mapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+                String val = mapper.writeValueAsString(json2);
+                System.err.println(val);
+
+
+                String response = restTemplate.postForObject(uri, val, String.class);
+
+                if(Objects.equals(response, "true")) {
+                    ServicesFragment servicesFragment = ServicesFragment.newInstance(user);
+                    getFragmentManager().beginTransaction().replace(R.id.fragment_tag, servicesFragment).commit();
+                    return ;
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        thread.start();
 
 
     }

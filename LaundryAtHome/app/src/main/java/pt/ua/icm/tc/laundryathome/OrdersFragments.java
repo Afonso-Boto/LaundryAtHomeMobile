@@ -128,7 +128,7 @@ public class OrdersFragments extends Fragment {
             @Override
             public void onItemClick(int position, View v) {
                 TrackingFragment trackingFragment = TrackingFragment.newInstance(orders.get(position).getId());
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragmentLayout, trackingFragment).commit();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_tag, trackingFragment).commit();
             }
         });
 
