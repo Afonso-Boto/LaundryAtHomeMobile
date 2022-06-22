@@ -157,8 +157,7 @@ public class MakeOrderFragment extends Fragment implements View.OnClickListener 
                     jsonObjects.add(jsonObject);
                 }
                 if(items.isEmpty()){
-                    Toast.makeText(getContext(), "No items to order! Try to add items", Toast.LENGTH_SHORT).show();
-                    return;
+                    throw new IllegalArgumentException("No items to order");
                 }
 
                 JSONArray jsonArray = new JSONArray(jsonObjects);
@@ -181,9 +180,16 @@ public class MakeOrderFragment extends Fragment implements View.OnClickListener 
                     return ;
                 }
 
+            } catch (IllegalArgumentException e){
+                getActivity().runOnUiThread(new Runnable() {
+                    public void run() {
+                        Toast.makeText(getActivity(), "No Items added! Pls try add some!", Toast.LENGTH_LONG).show();
+                    }
+                });
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
         });
         thread.start();
 
