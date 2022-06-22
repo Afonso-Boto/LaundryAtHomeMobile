@@ -10,8 +10,8 @@
         android:id="@+id/spinner_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editTextTextPersonName"
-        android:layout_alignStart="@+id/editTextTextPersonName"
+        android:layout_below="@+id/addr_input"
+        android:layout_alignStart="@+id/addr_input"
         android:layout_marginStart="0dp"
         android:layout_marginTop="22dp" />
 
@@ -58,7 +58,7 @@
         android:textSize="20sp" />
 
     <EditText
-        android:id="@+id/editTextNumber"
+        android:id="@+id/number_input"
         android:layout_width="75dp"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/spinner_color"
@@ -79,7 +79,7 @@
         android:text="add" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/make_order_btn"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:layout_alignTop="@+id/add_btn"
@@ -92,15 +92,15 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/editTextTextPersonName"
+        android:layout_alignBottom="@+id/addr_input"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="0dp"
-        android:layout_toStartOf="@+id/editTextTextPersonName"
+        android:layout_toStartOf="@+id/addr_input"
         android:text="Address"
         android:textSize="20sp" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/addr_input"
         android:layout_width="121dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"

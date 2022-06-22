@@ -10,29 +10,44 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TableLayout;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import pt.ua.icm.tc.laundryathome.model.Item;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link MakeOrderFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MakeOrderFragment extends Fragment {
+public class MakeOrderFragment extends Fragment implements View.OnClickListener {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "USERNAME";
+
+
     View view;
+    String user;
+    EditText addr;
+    EditText numOfItems;
+    Button addItem;
+    Button makeOrder;
+
+    List<Item> items = new ArrayList<>();
+
 
     ArrayAdapter<CharSequence> adapterType;
     ArrayAdapter<CharSequence> adapterColor;
 
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
     private Spinner spinnerType;
     private Spinner spinnerColor;
 
@@ -60,7 +75,7 @@ public class MakeOrderFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
+            user = getArguments().getString(ARG_PARAM1);
         }
 
     }
@@ -73,7 +88,13 @@ public class MakeOrderFragment extends Fragment {
         // Inflate the layout for this fragment
         spinnerType = view.findViewById(R.id.spinner_type);
         spinnerColor = view.findViewById(R.id.spinner_color);
+        addr = view.findViewById(R.id.addr_input);
+        numOfItems = view.findViewById(R.id.number_input);
+        addItem = view.findViewById(R.id.add_btn);
+        makeOrder = view.findViewById(R.id.make_order_btn);
 
+        addItem.setOnClickListener(this);
+        makeOrder.setOnClickListener(this);
 
         adapterType = ArrayAdapter.createFromResource(getContext(), R.array.services_array, android.R.layout.simple_spinner_item);
         adapterColor = ArrayAdapter.createFromResource(getContext(), R.array.item_color, android.R.layout.simple_spinner_item);
@@ -87,4 +108,32 @@ public class MakeOrderFragment extends Fragment {
         return view;
     }
 
+    public boolean addItem(){
+        String type = spinnerType.getSelectedItem().toString();
+        String color = spinnerColor.getSelectedItem().toString();
+        String addr = this.addr.getText().toString();
+        String numOfItems = this.numOfItems.getText().toString();
+
+        Item item = new Item(type, color, addr, numOfItems);
+        return  items.add(item);
+    }
+
+    public void makeOrder(){
+
+
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.add_btn:
+                addItem();
+                break;
+            case R.id.make_order_btn:
+                makeOrder();
+                break;
+            default:
+                break;
+        }
+    }
 }
