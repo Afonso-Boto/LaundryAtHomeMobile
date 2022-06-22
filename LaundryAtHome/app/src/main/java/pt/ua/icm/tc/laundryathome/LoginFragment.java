@@ -117,13 +117,13 @@ public class LoginFragment extends Fragment {
 
                     String response = restTemplate.postForObject(uri, new LoginRequest(username, password), String.class);
 
-
                     if(Objects.equals(response, "true")) {
                         if (username.equals("admin")) {
                             System.err.println("Login successful as admin");
                             Toast.makeText(getContext(), "Login successful as admin", Toast.LENGTH_SHORT).show();
                         } else {
-                            getFragmentManager().beginTransaction().replace(R.id.fragment_tag, new ServicesFragment()).commit();
+                            ServicesFragment servicesFragment = ServicesFragment.newInstance(username);
+                            getFragmentManager().beginTransaction().replace(R.id.fragment_tag, servicesFragment).commit();
                         }
                     }
 

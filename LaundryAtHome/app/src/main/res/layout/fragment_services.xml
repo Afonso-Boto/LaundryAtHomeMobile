@@ -9,7 +9,7 @@
 
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/wash_service"
         android:layout_width="140dp"
         android:layout_height="140dp"
         android:layout_alignParentStart="true"
@@ -19,32 +19,32 @@
         android:src="@drawable/wash" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/dry_cleaning_service"
         android:layout_width="140dp"
         android:layout_height="140dp"
-        android:layout_alignTop="@+id/imageView2"
+        android:layout_alignTop="@+id/wash_service"
         android:layout_marginStart="55dp"
         android:layout_marginTop="0dp"
-        android:layout_toEndOf="@+id/imageView2"
+        android:layout_toEndOf="@+id/wash_service"
         android:src="@drawable/dry_cleaning" />
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/wash_and_laundry_service"
         android:layout_width="140dp"
         android:layout_height="140dp"
-        android:layout_below="@+id/imageView2"
-        android:layout_alignStart="@+id/imageView2"
+        android:layout_below="@+id/wash_service"
+        android:layout_alignStart="@+id/wash_service"
         android:layout_marginStart="0dp"
         android:layout_marginTop="55dp"
         android:src="@drawable/wash_laundry" />
 
     <ImageView
-        android:id="@+id/imageView7"
+        android:id="@+id/special_items_service"
         android:layout_width="140dp"
         android:layout_height="140dp"
-        android:layout_alignTop="@+id/imageView4"
+        android:layout_alignTop="@+id/wash_and_laundry_service"
         android:layout_marginStart="55dp"
         android:layout_marginTop="0dp"
-        android:layout_toEndOf="@+id/imageView4"
+        android:layout_toEndOf="@+id/wash_and_laundry_service"
         android:src="@drawable/special_items" />
 </RelativeLayout>
