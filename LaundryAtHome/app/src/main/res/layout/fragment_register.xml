@@ -24,13 +24,14 @@
         android:layout_marginTop="169dp"
         android:hint="Username" />
 
-    <com.google.android.material.textfield.TextInputEditText
+    <EditText
         android:id="@+id/inputPassword2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/inputPhone"
         android:layout_marginTop="16dp"
-        android:hint="Password" />
+        android:hint="Password"
+        android:inputType="textPassword" />
 
     <Button
         android:id="@+id/btnRegister"

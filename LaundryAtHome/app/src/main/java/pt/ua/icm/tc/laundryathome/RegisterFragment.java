@@ -78,8 +78,8 @@ public class RegisterFragment extends Fragment {
     }
 
     Button btnRegister;
-    TextInputEditText inputUsername2, inputPassword2;
-    EditText inputEmail, inputFullName, inputPhone;
+    TextInputEditText inputUsername2;
+    EditText inputPassword2, inputEmail, inputFullName, inputPhone;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {

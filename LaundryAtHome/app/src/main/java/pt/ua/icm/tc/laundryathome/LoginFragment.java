@@ -70,7 +70,8 @@ public class LoginFragment extends Fragment {
         return fragment;
     }
 
-    TextInputEditText inputUsername, inputPassword;
+    TextInputEditText inputUsername;
+    EditText inputPassword;
     Button btnLogin;
 
     @Override
@@ -141,7 +142,7 @@ public class LoginFragment extends Fragment {
         Button btnSwitchRegister = view.findViewById(R.id.btnSwitchRegister);
         btnSwitchRegister.setOnClickListener(v -> {
             FragmentManager fm = getFragmentManager();
-            fm.beginTransaction().replace(R.id.fragmentLayout, new RegisterFragment()).commit();
+            fm.beginTransaction().replace(R.id.fragment_tag, new RegisterFragment()).commit();
         });
     }
 }
