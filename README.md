@@ -13,10 +13,10 @@ They can:
 
 * [Ready-to-use apk](https://github.com/Afonso-Boto/LaundryAtHomeMobile/blob/main/app-debug.apk)
 
-### Login for the admin of the laundry
+### Login for the admin
 * Username: admin
 * Password: 123
 
-### Login for the test user (final client of the laundry)
+### Login for the end-user
 * Username: test
 * Password: 123
