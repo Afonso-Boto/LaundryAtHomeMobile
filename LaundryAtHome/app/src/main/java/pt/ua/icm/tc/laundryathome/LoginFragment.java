@@ -120,12 +120,14 @@ public class LoginFragment extends Fragment {
                     if(Objects.equals(response, "true")) {
                         if (username.equals("admin")) {
                             System.err.println("Login successful as admin");
-                            Toast.makeText(getContext(), "Login successful as admin", Toast.LENGTH_SHORT).show();
+                            OrdersFragments ordersFragments = OrdersFragments.newInstance(username);
+                            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_tag, ordersFragments).commit();
                         } else {
                             ServicesFragment servicesFragment = ServicesFragment.newInstance(username);
                             getFragmentManager().beginTransaction().replace(R.id.fragment_tag, servicesFragment).commit();
                         }
                     }
+
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -139,7 +141,7 @@ public class LoginFragment extends Fragment {
         Button btnSwitchRegister = view.findViewById(R.id.btnSwitchRegister);
         btnSwitchRegister.setOnClickListener(v -> {
             FragmentManager fm = getFragmentManager();
-            fm.beginTransaction().replace(R.id.fragment_tag, new RegisterFragment()).commit();
+            fm.beginTransaction().replace(R.id.fragmentLayout, new RegisterFragment()).commit();
         });
     }
 }
