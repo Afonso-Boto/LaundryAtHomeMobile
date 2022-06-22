@@ -1,9 +1,16 @@
 package pt.ua.icm.tc.laundryathome;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -15,10 +22,27 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TableLayout;
+import android.widget.Toast;
+
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import pt.ua.icm.tc.laundryathome.model.Item;
 
@@ -111,14 +135,71 @@ public class MakeOrderFragment extends Fragment implements View.OnClickListener 
     public boolean addItem(){
         String type = spinnerType.getSelectedItem().toString();
         String color = spinnerColor.getSelectedItem().toString();
+        if(this.addr.getText().toString().equals("") || this.numOfItems.getText().toString().equals("")){
+            Toast.makeText(getContext(), "Please fill all fields", Toast.LENGTH_SHORT).show();
+            return false;
+        }
         String addr = this.addr.getText().toString();
         String numOfItems = this.numOfItems.getText().toString();
 
-        Item item = new Item(type, color, addr, numOfItems);
+
+        Item item = new Item(addr, type, color, numOfItems);
+        System.err.println(item.toJson());
         return  items.add(item);
     }
 
     public void makeOrder(){
+        Thread thread = new Thread(() -> {
+            try {
+                String uri = "http://10.0.2.2:81/order/make-order-mobile/" + user;
+                List<JSONObject> jsonObjects = new ArrayList<>();
+                for (Item item : items) {
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.put("itemType", item.getItemType());
+                    jsonObject.put("isDark", item.getIsDark());
+                    jsonObject.put("number", item.getNumber());
+                    jsonObject.put("address", item.getAddress());
+                    System.err.println(jsonObject);
+
+                    jsonObjects.add(jsonObject);
+                }
+                if(items.isEmpty()){
+                    throw new IllegalArgumentException("No items to order");
+                }
+
+                JSONArray jsonArray = new JSONArray(jsonObjects);
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("its", jsonArray);
+                String send = jsonObject.toString().replaceAll("\"", "\'");
+                System.err.println(send);
+
+
+                // Create Rest template instance and add the Jackson and String message converters
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+
+                String response = restTemplate.postForObject(uri, send,String.class);
+
+                if(Objects.equals(response, "true")) {
+
+                    ServicesFragment servicesFragment = ServicesFragment.newInstance(user);
+                    getFragmentManager().beginTransaction().replace(R.id.fragment_tag, servicesFragment).commit();
+                    return ;
+                }
+
+            } catch (IllegalArgumentException e){
+                getActivity().runOnUiThread(new Runnable() {
+                    public void run() {
+                        Toast.makeText(getActivity(), "No Items added! Pls try add some!", Toast.LENGTH_LONG).show();
+                    }
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        });
+        thread.start();
 
 
     }
