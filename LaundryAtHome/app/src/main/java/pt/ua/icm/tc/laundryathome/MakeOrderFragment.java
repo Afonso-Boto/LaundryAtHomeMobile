@@ -1,9 +1,16 @@
 package pt.ua.icm.tc.laundryathome;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -175,6 +182,7 @@ public class MakeOrderFragment extends Fragment implements View.OnClickListener 
                 String response = restTemplate.postForObject(uri, send,String.class);
 
                 if(Objects.equals(response, "true")) {
+
                     ServicesFragment servicesFragment = ServicesFragment.newInstance(user);
                     getFragmentManager().beginTransaction().replace(R.id.fragment_tag, servicesFragment).commit();
                     return ;
