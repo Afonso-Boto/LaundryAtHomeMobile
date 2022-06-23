@@ -77,7 +77,7 @@ public class ComplaintFragment extends Fragment {
             // Thread
             Thread thread = new Thread(() -> {
                 try {
-                    String uri = "http://52.233.236.63:81/order/complaint-mobile";
+                    String uri = "http://51.142.78.179:81/mobile/order/complaint";
 
 
                     // Create Rest template instance and add the Jackson and String message converters

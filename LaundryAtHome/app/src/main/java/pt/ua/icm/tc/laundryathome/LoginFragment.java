@@ -107,7 +107,7 @@ public class LoginFragment extends Fragment {
 
             Thread thread = new Thread(() -> {
                 try {
-                    String uri = "http://52.233.236.63:81/auth/login-mobile";
+                    String uri = "http://51.142.78.179:81/mobile/auth/login";
 
                     String username = inputUsername.getText().toString();
                     String password = inputPassword.getText().toString();

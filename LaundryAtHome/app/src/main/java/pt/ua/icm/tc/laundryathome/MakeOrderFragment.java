@@ -151,7 +151,7 @@ public class MakeOrderFragment extends Fragment implements View.OnClickListener 
     public void makeOrder(){
         Thread thread = new Thread(() -> {
             try {
-                String uri = "http://52.233.236.63:81/order/make-order-mobile/" + user;
+                String uri = "http://51.142.78.179:81/mobile/order/make-order/" + user;
                 List<JSONObject> jsonObjects = new ArrayList<>();
                 for (Item item : items) {
                     JSONObject jsonObject = new JSONObject();

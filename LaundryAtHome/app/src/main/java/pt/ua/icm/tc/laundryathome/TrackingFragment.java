@@ -97,7 +97,7 @@ public class TrackingFragment extends Fragment {
         // Thread
         Thread thread = new Thread(() -> {
             try {
-                String uri = "http://52.233.236.63:81/tracking-mobile?orderId=" + mParam1;
+                String uri = "http://51.142.78.179:81/mobile/tracking?orderId=" + mParam1;
 
 
                 // Create Rest template instance and add the Jackson and String message converters
@@ -221,7 +221,7 @@ public class TrackingFragment extends Fragment {
         try {
             // May throw an IOException
             address = coder.getFromLocationName(strAddress, 5);
-            if (address == null) {
+            if (address == null || address.size() == 0) {
                 return null;
             }
 

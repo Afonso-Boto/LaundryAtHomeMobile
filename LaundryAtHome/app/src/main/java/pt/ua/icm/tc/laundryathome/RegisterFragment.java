@@ -107,7 +107,7 @@ public class RegisterFragment extends Fragment {
                     String fullName = inputFullName.getText().toString();
                     String phone = inputPhone.getText().toString();
 
-                    String uri = "http://52.233.236.63:81/auth/register-mobile";
+                    String uri = "http://51.142.78.179:81/mobile/auth/register";
 
                     // Create Rest template instance and add the Jackson and String message converters
                     RestTemplate restTemplate = new RestTemplate();
